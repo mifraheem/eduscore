@@ -7,110 +7,81 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
   <div>
     <h1 class="text-2xl font-semibold">Upload Study Material</h1>
-    <p class="text-gray-500 text-sm">Upload a PDF, DOCX, or text file to auto-summarize and generate quizzes.</p>
-  </div>
-</div>
-
-<!-- Upload Box -->
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8 text-center">
-  <svg class="mx-auto h-12 w-12 text-primary mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 16v-8m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
-  </svg>
-  <h3 class="text-lg font-medium mb-2">Drag & Drop your file here</h3>
-  <p class="text-sm text-gray-500 mb-4">Supported formats: PDF, DOCX, TXT (max 10MB)</p>
-
-  <input type="file" id="fileUpload" class="hidden" />
-  <label for="fileUpload"
-         class="cursor-pointer inline-block bg-primary text-white font-semibold px-6 py-2 rounded-xl hover:bg-primary/90 transition">
-    Choose File
-  </label>
-</div>
-
-<!-- Description Input -->
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
-  <h2 class="text-lg font-semibold mb-3">Material Details</h2>
-  <div class="space-y-4">
-    <div>
-      <label class="block text-sm font-medium mb-1">Title</label>
-      <input type="text" placeholder="e.g., Algebra – Chapter 1"
-             class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40">
-    </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">Short Description</label>
-      <textarea rows="3" placeholder="Describe what this material contains..."
-                class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40"></textarea>
-    </div>
-    <div class="flex justify-end">
-      <button id="generateSummaryBtn"
-              class="bg-primary text-white px-6 py-2 rounded-xl font-semibold hover:bg-primary/90 transition">
-        Generate AI Summary
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Summary Section -->
-<div id="summarySection" class="hidden bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8 transition-all duration-300">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-semibold flex items-center gap-2">
-      <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none">
-        <path d="M13 16h-1v-4h-1m0 0H9m2 0h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M12 6v1m0 10v1m0-1a6 6 0 100-12 6 6 0 000 12z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      AI Generated Summary
-    </h2>
-    <button id="editSummaryBtn" class="text-primary text-sm hover:underline">Edit</button>
-  </div>
-
-  <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed max-h-64 overflow-y-auto">
-    <p>
-      <strong>Summary Preview:</strong><br>
-      Algebra is a branch of mathematics dealing with symbols and rules for manipulating those symbols.
-      This chapter introduces basic algebraic concepts such as variables, constants, and equations. It
-      covers how to form and solve linear equations and explores the importance of algebraic reasoning
-      in solving real-world problems.
+    <p class="text-gray-500 text-sm">
+      Upload a PDF, DOCX, or text file for your class materials.
     </p>
   </div>
-
-  <div class="mt-6 flex justify-end gap-3">
-    <button id="regenSummaryBtn" class="border px-5 py-2 rounded-xl hover:bg-gray-50">Regenerate</button>
-    <button class="bg-primary text-white px-5 py-2 rounded-xl hover:bg-primary/90">
-      Generate Quiz →
-    </button>
-  </div>
 </div>
 
-<!-- Suggestion Panel -->
-<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+<!-- Upload Form -->
+<form method="POST" enctype="multipart/form-data" class="space-y-8">
+  {% csrf_token %}
+
+  <!-- File Upload -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
+    <svg class="mx-auto h-12 w-12 text-primary mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 16v-8m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+    </svg>
+    <h3 class="text-lg font-medium mb-2">Upload File</h3>
+    <p class="text-sm text-gray-500 mb-4">Supported formats: PDF, DOCX, TXT (max 10MB)</p>
+
+    <input type="file" name="file" id="fileUpload" class="hidden" required />
+    <label for="fileUpload"
+           class="cursor-pointer inline-block bg-primary text-white font-semibold px-6 py-2 rounded-xl hover:bg-primary/90 transition">
+      Choose File
+    </label>
+  </div>
+
+  <!-- Material Details -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <h2 class="text-lg font-semibold mb-3">Material Details</h2>
+    <div class="space-y-4">
+
+      <!-- Course Selection -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Select Class</label>
+        <select name="course" required
+                class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white">
+          <option value="">-- Choose a class --</option>
+          {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.title }} ({{ course.code }})</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Title</label>
+        <input type="text" name="title" required placeholder="e.g., Algebra – Chapter 1"
+               class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40">
+      </div>
+
+      <!-- Optional Description (not used in view yet, but fine to keep) -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Short Description</label>
+        <textarea rows="3" placeholder="Describe what this material contains..."
+                  class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40"></textarea>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit"
+                class="bg-primary text-white px-6 py-2 rounded-xl font-semibold hover:bg-primary/90 transition">
+          Upload Material
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Tips -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-8">
   <h2 class="text-lg font-semibold mb-3">Tips for Better Results</h2>
   <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
-    <li>Upload clear, text-based files for accurate AI summarization.</li>
+    <li>Upload clear, text-based files for accurate summarization.</li>
     <li>Use meaningful file names like <em>“Physics_Ch2_Energy.pdf”</em>.</li>
-    <li>Review and edit summaries before finalizing.</li>
-    <li>Ensure the file is under 10MB to avoid delays.</li>
+    <li>Ensure the file is under 10MB to avoid issues.</li>
   </ul>
 </div>
-
-<!-- JS for Interactions -->
-<script>
-  const summarySection = document.getElementById('summarySection');
-  const generateBtn = document.getElementById('generateSummaryBtn');
-  const regenBtn = document.getElementById('regenSummaryBtn');
-  const editBtn = document.getElementById('editSummaryBtn');
-
-  generateBtn?.addEventListener('click', () => {
-    summarySection.classList.remove('hidden');
-    summarySection.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  regenBtn?.addEventListener('click', () => {
-    alert('AI is regenerating the summary... (mock)');
-  });
-
-  editBtn?.addEventListener('click', () => {
-    alert('Editable mode coming soon!');
-  });
-</script>
 
 {% endblock %}
