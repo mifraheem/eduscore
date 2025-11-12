@@ -1,0 +1,116 @@
+{% extends "tbase.html" %}
+{% block title %}EduScore | Generate Quiz{% endblock %}
+
+{% block content %}
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+  <div>
+    <h1 class="text-2xl font-semibold">Generate Quiz</h1>
+    <p class="text-gray-500 text-sm">Review AI-generated questions and make adjustments before publishing.</p>
+  </div>
+</div>
+
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <h2 class="text-lg font-semibold mb-3">Summary Reference</h2>
+  <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 max-h-48 overflow-y-auto">
+    <p>
+      Algebra introduces mathematical symbols and the rules for manipulating these symbols. This section covers
+      variables, constants, linear equations, and real-world applications. Understanding these fundamentals is
+      essential for advanced mathematical reasoning.
+    </p>
+  </div>
+</div>
+
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">AI Generated Questions</h2>
+    <button id="regenerateQuiz" class="px-4 py-2 bg-primary text-white rounded-xl hover:bg-primary/90">Regenerate</button>
+  </div>
+
+  <div class="space-y-6">
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <p class="font-medium mb-2">1. What is the main concept introduced in algebra?</p>
+      <ul class="space-y-2 text-sm">
+        <li><label><input type="radio" name="q1" class="mr-2">Geometry and shapes</label></li>
+        <li><label><input type="radio" name="q1" class="mr-2">Use of symbols and equations</label></li>
+        <li><label><input type="radio" name="q1" class="mr-2">Data analysis</label></li>
+        <li><label><input type="radio" name="q1" class="mr-2">Measurement units</label></li>
+      </ul>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <p class="font-medium mb-2">2. Which of the following represents a variable?</p>
+      <ul class="space-y-2 text-sm">
+        <li><label><input type="radio" name="q2" class="mr-2">5</label></li>
+        <li><label><input type="radio" name="q2" class="mr-2">x</label></li>
+        <li><label><input type="radio" name="q2" class="mr-2">10</label></li>
+        <li><label><input type="radio" name="q2" class="mr-2">=</label></li>
+      </ul>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <p class="font-medium mb-2">3. What is the purpose of solving linear equations?</p>
+      <ul class="space-y-2 text-sm">
+        <li><label><input type="radio" name="q3" class="mr-2">To find the relationship between variables</label></li>
+        <li><label><input type="radio" name="q3" class="mr-2">To measure geometric angles</label></li>
+        <li><label><input type="radio" name="q3" class="mr-2">To analyze statistics</label></li>
+        <li><label><input type="radio" name="q3" class="mr-2">To identify constants</label></li>
+      </ul>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <p class="font-medium mb-2">4. In algebra, constants are defined as?</p>
+      <ul class="space-y-2 text-sm">
+        <li><label><input type="radio" name="q4" class="mr-2">Numbers that change</label></li>
+        <li><label><input type="radio" name="q4" class="mr-2">Fixed numerical values</label></li>
+        <li><label><input type="radio" name="q4" class="mr-2">Alphabetic symbols</label></li>
+        <li><label><input type="radio" name="q4" class="mr-2">Unknown variables</label></li>
+      </ul>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <p class="font-medium mb-2">5. What is the significance of algebra in real life?</p>
+      <ul class="space-y-2 text-sm">
+        <li><label><input type="radio" name="q5" class="mr-2">It helps calculate grocery bills</label></li>
+        <li><label><input type="radio" name="q5" class="mr-2">It provides tools for logical problem-solving</label></li>
+        <li><label><input type="radio" name="q5" class="mr-2">It replaces basic arithmetic</label></li>
+        <li><label><input type="radio" name="q5" class="mr-2">It has no practical use</label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-end gap-3">
+    <button id="editQuiz" class="border px-5 py-2 rounded-xl hover:bg-gray-50">Edit Questions</button>
+    <button class="bg-primary text-white px-5 py-2 rounded-xl hover:bg-primary/90">Publish Quiz</button>
+  </div>
+</div>
+
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+  <h2 class="text-lg font-semibold mb-3">Quiz Settings</h2>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Difficulty Level</label>
+      <select class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/40">
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Time Limit</label>
+      <input type="number" placeholder="e.g., 15 minutes" 
+             class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary/40">
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('regenerateQuiz')?.addEventListener('click', () => {
+    alert('AI is regenerating new quiz questions... (mock)');
+  });
+  document.getElementById('editQuiz')?.addEventListener('click', () => {
+    alert('Edit mode coming soon!');
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "tbase.html" %}
+{% block title %}EduScore | My Quizzes{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+  <div>
+    <h1 class="text-2xl font-semibold">My Quizzes</h1>
+    <p class="text-gray-500 text-sm">Manage, edit, and monitor your class quizzes.</p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <input type="text" placeholder="Search quizzes..."
+           class="w-64 pl-10 pr-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white text-sm"
+           id="searchQuiz">
+    <svg class="w-5 h-5 text-gray-400 absolute ml-3 mt-1.5 pointer-events-none" viewBox="0 0 24 24" fill="none">
+      <path d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <button
+      class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl shadow-sm hover:bg-primary/90 transition">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      New Quiz
+    </button>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3 mb-6">
+  <button class="px-4 py-1.5 rounded-full bg-primary text-white text-sm">All</button>
+  <button class="px-4 py-1.5 rounded-full border text-sm hover:bg-gray-50">Active</button>
+  <button class="px-4 py-1.5 rounded-full border text-sm hover:bg-gray-50">Draft</button>
+  <button class="px-4 py-1.5 rounded-full border text-sm hover:bg-gray-50">Archived</button>
+</div>
+
+<!-- Quiz List Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+
+  <!-- Quiz Card -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-lg font-semibold">Algebra Basics</h2>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">5 Questions • Difficulty: Easy</p>
+    <div class="flex justify-between items-center">
+      <div class="text-sm text-gray-500">Attempts: <span class="font-medium text-gray-700">28</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Results</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-lg font-semibold">Linear Equations</h2>
+      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Draft</span>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">8 Questions • Difficulty: Medium</p>
+    <div class="flex justify-between items-center">
+      <div class="text-sm text-gray-500">Attempts: <span class="font-medium text-gray-700">0</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">Edit</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Publish</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-lg font-semibold">Quadratic Equations</h2>
+      <span class="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Archived</span>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">10 Questions • Difficulty: Hard</p>
+    <div class="flex justify-between items-center">
+      <div class="text-sm text-gray-500">Attempts: <span class="font-medium text-gray-700">112</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg text-sm border border-red-300 text-red-600 hover:bg-red-50">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-lg font-semibold">Geometry Fundamentals</h2>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">7 Questions • Difficulty: Easy</p>
+    <div class="flex justify-between items-center">
+      <div class="text-sm text-gray-500">Attempts: <span class="font-medium text-gray-700">54</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Results</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-2 mt-10">
+  <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">← Prev</button>
+  <button class="px-3 py-1.5 border rounded-lg bg-primary text-white">1</button>
+  <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">2</button>
+  <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">3</button>
+  <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">Next →</button>
+</div>
+
+<script>
+  document.getElementById('searchQuiz')?.addEventListener('input', e => {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('.grid > div').forEach(card => {
+      const match = card.textContent.toLowerCase().includes(term);
+      card.style.display = match ? 'block' : 'none';
+    });
+  });
+</script>
+
+{% endblock %}

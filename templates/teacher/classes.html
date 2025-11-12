@@ -1,0 +1,264 @@
+{% extends "tbase.html" %}
+{% block title %}EduScore | My Classes{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+  <div>
+    <h1 class="text-2xl font-semibold tracking-tight">My Classes</h1>
+    <p class="text-gray-500 text-sm">Create, manage, and organize your classes.</p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Search classes..."
+        class="w-64 pl-10 pr-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 bg-white"
+      />
+      <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-400" viewBox="0 0 24 24" fill="none">
+        <path d="M21 21l-4.3-4.3M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <button id="openNewClass"
+      class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl shadow-sm hover:bg-primary/90 transition">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      New Class
+    </button>
+  </div>
+</div>
+
+<!-- Stats (optional eye-candy) -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Total Classes</p>
+    <p class="text-2xl font-semibold mt-1">6</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Active Students</p>
+    <p class="text-2xl font-semibold mt-1">142</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">This Week Sessions</p>
+    <p class="text-2xl font-semibold mt-1">12</p>
+  </div>
+</div>
+
+<!-- Classes Grid (Mock Data) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+  <!-- Card 1 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 10 – Mathematics</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">MATH10-A</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Algebra</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Geometry</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Trigonometry</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">32</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 9 – Physics</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">PHY9-B</span></p>
+      </div>
+      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Draft</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Kinematics</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Forces</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Energy</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">24</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 11 – Computer Science</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">CS11-C</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Python</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">OOP</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Databases</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">28</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 8 – English</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">ENG8-A</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Grammar</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Comprehension</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Writing</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">26</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 12 – Chemistry</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">CHEM12-A</span></p>
+      </div>
+      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Draft</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Organic</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Inorganic</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Physical</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">18</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 6 -->
+  <div class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-5">
+    <div class="flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-semibold">Grade 7 – Biology</h3>
+        <p class="text-gray-500 text-sm">Code: <span class="font-mono">BIO7-B</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-1 rounded-full bg-gray-100">Cells</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Genetics</span>
+      <span class="px-2 py-1 rounded-full bg-gray-100">Ecology</span>
+    </div>
+    <div class="mt-5 flex items-center justify-between">
+      <div class="text-sm text-gray-500">Students: <span class="font-medium text-gray-700">14</span></div>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 rounded-lg border text-sm hover:bg-gray-50">View</button>
+        <button class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm hover:bg-primary/90">Manage</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Class Modal -->
+<div id="newClassModal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="relative max-w-lg mx-auto mt-24 bg-white rounded-2xl shadow-xl border border-gray-100">
+    <div class="flex items-center justify-between px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold">Create New Class</h3>
+      <button id="closeNewClass" class="p-2 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <form class="px-6 py-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Class Name</label>
+        <input type="text" placeholder="e.g., Grade 10 – Mathematics"
+               class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white">
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Section</label>
+          <input type="text" placeholder="e.g., A"
+                 class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Subject</label>
+          <input type="text" placeholder="e.g., Mathematics"
+                 class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Short Description</label>
+        <textarea rows="3" placeholder="Purpose, topics, or notes…"
+                  class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white"></textarea>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button type="button" id="cancelNewClass" class="px-4 py-2 rounded-xl border hover:bg-gray-50">Cancel</button>
+        <button type="button" class="px-4 py-2 rounded-xl bg-primary text-white hover:bg-primary/90">Create Class</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal JS -->
+<script>
+  const openBtn = document.getElementById('openNewClass');
+  const closeBtn = document.getElementById('closeNewClass');
+  const cancelBtn = document.getElementById('cancelNewClass');
+  const modal = document.getElementById('newClassModal');
+
+  function openModal(){ modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+  function closeModal(){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  cancelBtn?.addEventListener('click', closeModal);
+
+  // Close on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+  });
+</script>
+
+{% endblock %}

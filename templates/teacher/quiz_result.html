@@ -1,0 +1,161 @@
+{% extends "tbase.html" %}
+{% block title %}EduScore | Quiz Overview{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+  <div>
+    <h1 class="text-2xl font-semibold">Quiz Overview – Algebra Basics</h1>
+    <p class="text-gray-500 text-sm">Class: Grade 10 – Mathematics • Created on: Oct 28, 2025</p>
+  </div>
+  <div class="flex items-center gap-2">
+    <button class="bg-primary text-white px-5 py-2 rounded-xl font-semibold hover:bg-primary/90">Export Results</button>
+    <button class="border px-5 py-2 rounded-xl hover:bg-gray-50">Back to Quizzes</button>
+  </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Total Students</p>
+    <p class="text-2xl font-semibold mt-1">32</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Submitted</p>
+    <p class="text-2xl font-semibold mt-1 text-green-600">27</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Average Score</p>
+    <p class="text-2xl font-semibold mt-1 text-blue-600">78%</p>
+  </div>
+</div>
+
+<!-- Quiz Details -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <div class="flex items-center justify-between mb-3">
+    <h2 class="text-lg font-semibold">Quiz Information</h2>
+    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4 text-sm text-gray-700">
+    <p><span class="font-medium">Total Questions:</span> 5</p>
+    <p><span class="font-medium">Difficulty:</span> Easy</p>
+    <p><span class="font-medium">Time Limit:</span> 15 minutes</p>
+    <p><span class="font-medium">Created By:</span> Mr. Ahmed</p>
+  </div>
+</div>
+
+<!-- Students Overview -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+  <!-- Submitted -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Submitted Students (27)</h2>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Completed</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left border-b text-gray-500">
+            <th class="py-2 px-2">Name</th>
+            <th class="py-2 px-2">Email</th>
+            <th class="py-2 px-2">Score</th>
+            <th class="py-2 px-2">Feedback</th>
+            <th class="py-2 px-2 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr>
+            <td class="py-3 px-2 font-medium">Ayesha Khan</td>
+            <td class="py-3 px-2 text-gray-500">ayesha@example.com</td>
+            <td class="py-3 px-2 text-green-600 font-semibold">92%</td>
+            <td class="py-3 px-2 text-gray-600">Excellent understanding</td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View Answers</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Bilal Ahmad</td>
+            <td class="py-3 px-2 text-gray-500">bilal@example.com</td>
+            <td class="py-3 px-2 text-yellow-600 font-semibold">68%</td>
+            <td class="py-3 px-2 text-gray-600">Needs more algebra practice</td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View Answers</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Sana Riaz</td>
+            <td class="py-3 px-2 text-gray-500">sana@example.com</td>
+            <td class="py-3 px-2 text-blue-600 font-semibold">85%</td>
+            <td class="py-3 px-2 text-gray-600">Good effort overall</td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View Answers</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Not Submitted -->
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Unsubmitted Students (5)</h2>
+      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Pending</span>
+    </div>
+
+    <ul class="space-y-3 text-sm text-gray-700">
+      <li class="flex justify-between items-center border-b pb-2">
+        <span>Ali Raza</span>
+        <button class="text-primary hover:underline text-xs">Send Reminder</button>
+      </li>
+      <li class="flex justify-between items-center border-b pb-2">
+        <span>Hira Shah</span>
+        <button class="text-primary hover:underline text-xs">Send Reminder</button>
+      </li>
+      <li class="flex justify-between items-center border-b pb-2">
+        <span>Usman Tariq</span>
+        <button class="text-primary hover:underline text-xs">Send Reminder</button>
+      </li>
+      <li class="flex justify-between items-center border-b pb-2">
+        <span>Laiba Qureshi</span>
+        <button class="text-primary hover:underline text-xs">Send Reminder</button>
+      </li>
+      <li class="flex justify-between items-center border-b pb-2">
+        <span>Hassan Malik</span>
+        <button class="text-primary hover:underline text-xs">Send Reminder</button>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Class Performance Summary -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mt-8">
+  <h2 class="text-lg font-semibold mb-3">Class Performance Overview</h2>
+  <div class="grid sm:grid-cols-3 gap-4">
+    <div class="text-center p-4 border rounded-xl">
+      <p class="text-sm text-gray-500 mb-1">Highest Score</p>
+      <p class="text-2xl font-semibold text-green-600">97%</p>
+    </div>
+    <div class="text-center p-4 border rounded-xl">
+      <p class="text-sm text-gray-500 mb-1">Lowest Score</p>
+      <p class="text-2xl font-semibold text-red-600">54%</p>
+    </div>
+    <div class="text-center p-4 border rounded-xl">
+      <p class="text-sm text-gray-500 mb-1">Median</p>
+      <p class="text-2xl font-semibold text-blue-600">81%</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('button.text-primary').forEach(btn => {
+    btn.addEventListener('click', () => alert('Feature not active in mock mode.'));
+  });
+</script>
+
+{% endblock %}

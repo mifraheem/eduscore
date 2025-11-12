@@ -1,0 +1,203 @@
+{% extends "tbase.html" %}
+{% block title %}EduScore | Class View{% endblock %}
+
+{% block content %}
+
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+  <div>
+    <h1 class="text-2xl font-semibold">Grade 10 – Mathematics</h1>
+    <p class="text-gray-500 text-sm">Code: <span class="font-mono">MATH10-A</span> • Section A</p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <button id="openUploadModal"
+      class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl shadow-sm hover:bg-primary/90 transition">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Upload Material
+    </button>
+  </div>
+</div>
+
+<!-- Overview Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Total Students</p>
+    <p class="text-2xl font-semibold mt-1">32</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Uploaded Materials</p>
+    <p class="text-2xl font-semibold mt-1">12</p>
+  </div>
+  <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+    <p class="text-sm text-gray-500">Pending Quizzes</p>
+    <p class="text-2xl font-semibold mt-1">3</p>
+  </div>
+</div>
+
+<!-- Two-column Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+  <!-- Left: Students -->
+  <div class="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Students</h2>
+      <input type="text" placeholder="Search students..." class="px-3 py-1.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40">
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left border-b text-gray-500">
+            <th class="py-2 px-2">Name</th>
+            <th class="py-2 px-2">Email</th>
+            <th class="py-2 px-2">Status</th>
+            <th class="py-2 px-2">Progress</th>
+            <th class="py-2 px-2 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr>
+            <td class="py-3 px-2 font-medium">Ayesha Khan</td>
+            <td class="py-3 px-2 text-gray-500">ayesha@example.com</td>
+            <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Active</span></td>
+            <td class="py-3 px-2">
+              <div class="w-full bg-gray-100 rounded-full h-2">
+                <div class="bg-primary h-2 rounded-full" style="width: 82%;"></div>
+              </div>
+            </td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Bilal Ahmad</td>
+            <td class="py-3 px-2 text-gray-500">bilal@example.com</td>
+            <td class="py-3 px-2"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Pending</span></td>
+            <td class="py-3 px-2">
+              <div class="w-full bg-gray-100 rounded-full h-2">
+                <div class="bg-yellow-400 h-2 rounded-full" style="width: 45%;"></div>
+              </div>
+            </td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Sana Riaz</td>
+            <td class="py-3 px-2 text-gray-500">sana@example.com</td>
+            <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Active</span></td>
+            <td class="py-3 px-2">
+              <div class="w-full bg-gray-100 rounded-full h-2">
+                <div class="bg-primary h-2 rounded-full" style="width: 95%;"></div>
+              </div>
+            </td>
+            <td class="py-3 px-2 text-right">
+              <button class="text-primary hover:underline text-sm">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Right: Materials -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Uploaded Materials</h2>
+      <button id="openUploadModal2" class="p-1.5 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <ul class="space-y-3">
+      <li class="flex items-start justify-between border-b pb-2">
+        <div>
+          <p class="font-medium">Algebra – Chapter 1 Notes</p>
+          <p class="text-gray-500 text-xs">Uploaded: 5 days ago • Size: 1.2MB</p>
+        </div>
+        <button class="text-primary text-sm hover:underline">View</button>
+      </li>
+
+      <li class="flex items-start justify-between border-b pb-2">
+        <div>
+          <p class="font-medium">Geometry – Class Slides</p>
+          <p class="text-gray-500 text-xs">Uploaded: 1 week ago • Size: 2.1MB</p>
+        </div>
+        <button class="text-primary text-sm hover:underline">View</button>
+      </li>
+
+      <li class="flex items-start justify-between border-b pb-2">
+        <div>
+          <p class="font-medium">Trigonometry – Practice Quiz</p>
+          <p class="text-gray-500 text-xs">Uploaded: 2 weeks ago • Size: 700KB</p>
+        </div>
+        <button class="text-primary text-sm hover:underline">View</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Upload Material Modal -->
+<div id="uploadModal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="relative max-w-lg mx-auto mt-24 bg-white rounded-2xl shadow-xl border border-gray-100">
+    <div class="flex items-center justify-between px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold">Upload Material</h3>
+      <button id="closeUploadModal" class="p-2 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <form class="px-6 py-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Material Title</label>
+        <input type="text" placeholder="e.g., Algebra – Chapter 1 Notes"
+               class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">File Upload</label>
+        <input type="file"
+               class="w-full border border-gray-200 rounded-xl px-3 py-2 bg-gray-50 text-sm file:mr-4 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Short Description</label>
+        <textarea rows="3" placeholder="Brief about the material..." 
+                  class="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40"></textarea>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button type="button" id="cancelUpload" class="px-4 py-2 rounded-xl border hover:bg-gray-50">Cancel</button>
+        <button type="button" class="px-4 py-2 rounded-xl bg-primary text-white hover:bg-primary/90">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal JS -->
+<script>
+  const openBtns = [document.getElementById('openUploadModal'), document.getElementById('openUploadModal2')];
+  const closeBtn = document.getElementById('closeUploadModal');
+  const cancelBtn = document.getElementById('cancelUpload');
+  const modal = document.getElementById('uploadModal');
+
+  function openModal(){ modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+  function closeModal(){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+
+  openBtns.forEach(btn => btn?.addEventListener('click', openModal));
+  closeBtn?.addEventListener('click', closeModal);
+  cancelBtn?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+</script>
+
+{% endblock %}

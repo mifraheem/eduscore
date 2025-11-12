@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduScore | Teacher Dashboard{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Optional: Tailwind custom config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#2563EB',
+              secondary: '#1E3A8A',
+              accent: '#FBBF24',
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-primary text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img src="{% static 'images/logo.png' %}" alt="EduScore Logo" class="h-8 w-8">
+        <span class="text-xl font-semibold">EduScore | Teacher</span>
+      </div>
+
+      <div class="flex space-x-6">
+        <a href="{% url 'dashboard' %}" class="hover:text-accent">Dashboard</a>
+        <a href="{% url 'classes' %}" class="hover:text-accent">Classes</a>
+        <a href="{% url 'upload_material' %}" class="hover:text-accent">Upload Material</a>
+        <a href="{% url 'generate_quiz' %}" class="hover:text-accent">Generate Quiz</a>
+        <a href="{% url 'quiz_list' %}" class="hover:text-accent">My Quizzes</a>
+        <a href="{% url 'quiz_result' %}" class="hover:text-accent">Quiz Result</a>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <span class="hidden sm:inline font-medium">{{ request.user.username }}</span>
+        <a href="#" class="bg-white text-primary px-3 py-1 rounded-md text-sm font-semibold hover:bg-accent hover:text-white transition">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    {% block content %}
+    <!-- Child pages content goes here -->
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-center py-4 text-sm text-gray-500 mt-10 border-t">
+    © {{ now|date:"Y" }} EduScore. All rights reserved.
+  </footer>
+
+</body>
+</html>
