@@ -19,8 +19,9 @@ urlpatterns = [
     path('dashboard/', teacher_dashboard, name='teacher_dashboard'),
 
     path('', student_dashboard, name='student_dashboard'),
-    path('student/classes/', classes, name='std_classes'),
+    path('student/classes/', std_classes, name='std_classes'),
     path('student/classes/<int:class_id>/', class_view, name='std_class_view'),
+    path('student/classes/<int:class_id>/leave/', leave_class, name='std_leave_class'),
     path('student/take-quiz/', take_quiz, name='std_take_quiz'),
     path('student/quiz-result/', quiz_result, name='std_quiz_result'),
     path('student/profile/', profile, name='student_profile'),

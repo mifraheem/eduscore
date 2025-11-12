@@ -1,7 +1,7 @@
 {% extends "sbase.html" %}
-{% block title %}EduScore | Class View{% endblock %}
-{% block header_title %}Grade 10 – Mathematics{% endblock %}
-{% block header_subtitle %}Explore materials, attempt quizzes, and track your progress{% endblock %}
+{% block title %}EduScore | {{ course.title }}{% endblock %}
+{% block header_title %}{{ course.title }}{% endblock %}
+{% block header_subtitle %}Explore materials, meet classmates, and track your learning progress{% endblock %}
 
 {% block content %}
 
@@ -9,27 +9,41 @@
 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
     <div>
-      <h2 class="text-xl font-semibold text-primary">Mr. Ahmed’s Mathematics Class</h2>
-      <p class="text-gray-500 text-sm">Class Code: <span class="font-mono">MATH10-A</span> • Section A</p>
+      <h2 class="text-xl font-semibold text-primary">
+        {{ course.teacher.first_name }} {{ course.teacher.last_name }}’s {{ course.title }}
+      </h2>
+      <p class="text-gray-500 text-sm">
+        Class Code: <span class="font-mono">{{ course.code }}</span> 
+        {% if course.section %} • Section {{ course.section }}{% endif %}
+      </p>
+      {% if course.description %}
+      <p class="text-sm text-gray-600 mt-2 max-w-2xl">{{ course.description }}</p>
+      {% endif %}
     </div>
+
     <div class="flex gap-2">
       <button class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary/90">Join Discussion</button>
-      <button class="border px-4 py-2 rounded-xl text-sm hover:bg-gray-50">Leave Class</button>
+
+      <!-- Leave Class Button -->
+      <button id="openLeaveModal" 
+        class="border border-red-300 text-red-600 px-4 py-2 rounded-xl text-sm font-medium hover:bg-red-50">
+        Leave Class
+      </button>
     </div>
   </div>
 
   <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
       <p class="text-gray-500">Total Quizzes</p>
-      <p class="text-xl font-semibold text-blue-600 mt-1">5</p>
+      <p class="text-xl font-semibold text-blue-600 mt-1">{{ quizzes|length }}</p>
     </div>
     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
       <p class="text-gray-500">Materials Available</p>
-      <p class="text-xl font-semibold text-green-600 mt-1">8</p>
+      <p class="text-xl font-semibold text-green-600 mt-1">{{ materials|length }}</p>
     </div>
     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
       <p class="text-gray-500">Average Score</p>
-      <p class="text-xl font-semibold text-yellow-600 mt-1">82%</p>
+      <p class="text-xl font-semibold text-yellow-600 mt-1">{{ performance.average }}%</p>
     </div>
   </div>
 </div>
@@ -39,54 +53,39 @@
   <button id="tab-materials" class="tab-btn bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">Study Materials</button>
   <button id="tab-quizzes" class="tab-btn text-gray-700 hover:text-primary px-4 py-2 rounded-lg text-sm font-medium">Quizzes</button>
   <button id="tab-performance" class="tab-btn text-gray-700 hover:text-primary px-4 py-2 rounded-lg text-sm font-medium">Performance</button>
+  <button id="tab-classmates" class="tab-btn text-gray-700 hover:text-primary px-4 py-2 rounded-lg text-sm font-medium">Classmates</button>
 </div>
 
-<!-- Materials Section -->
+<!-- STUDY MATERIALS -->
 <div id="section-materials" class="tab-section">
+  {% if materials %}
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-    <!-- Material Card -->
+    {% for mat in materials %}
     <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
-      <h3 class="font-semibold text-lg mb-1 text-primary">Algebra – Chapter 1 Notes</h3>
-      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 2 days ago</p>
-      <p class="text-sm text-gray-700 leading-relaxed mb-4">
-        Covers basic algebraic expressions, equations, and problem-solving techniques. Includes examples and exercises.
+      <h3 class="font-semibold text-lg mb-1 text-primary">{{ mat.title }}</h3>
+      <p class="text-gray-500 text-sm mb-3">
+        Uploaded • {{ mat.uploaded_at|date:"M d, Y" }}
       </p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">{{ mat.description|default:"No description provided." }}</p>
       <div class="flex justify-between items-center">
         <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
-        <a href="#" class="text-sm text-primary hover:underline">Download</a>
+        <a href="{{ mat.file.url }}" target="_blank" class="text-sm text-primary hover:underline">Download</a>
       </div>
     </div>
-
-    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
-      <h3 class="font-semibold text-lg mb-1 text-primary">Geometry – Class Slides</h3>
-      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 1 week ago</p>
-      <p class="text-sm text-gray-700 leading-relaxed mb-4">
-        Introduction to geometry basics, shapes, theorems, and formulas. Ideal for mid-term preparation.
-      </p>
-      <div class="flex justify-between items-center">
-        <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
-        <a href="#" class="text-sm text-primary hover:underline">Download</a>
-      </div>
-    </div>
-
-    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
-      <h3 class="font-semibold text-lg mb-1 text-primary">Trigonometry – Practice Problems</h3>
-      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 4 days ago</p>
-      <p class="text-sm text-gray-700 leading-relaxed mb-4">
-        A collection of trigonometric identities and real-world problem sets to enhance understanding.
-      </p>
-      <div class="flex justify-between items-center">
-        <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
-        <a href="#" class="text-sm text-primary hover:underline">Download</a>
-      </div>
-    </div>
+    {% endfor %}
   </div>
+  {% else %}
+  <div class="text-center text-gray-500 bg-white rounded-xl border border-gray-100 py-10 shadow-sm">
+    No materials uploaded yet.
+  </div>
+  {% endif %}
 </div>
 
-<!-- Quizzes Section -->
+<!-- QUIZZES -->
 <div id="section-quizzes" class="tab-section hidden">
   <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
     <h2 class="text-lg font-semibold mb-4">Available Quizzes</h2>
+    {% if quizzes %}
     <table class="min-w-full text-sm">
       <thead>
         <tr class="text-left text-gray-500 border-b">
@@ -98,99 +97,144 @@
         </tr>
       </thead>
       <tbody class="divide-y">
+        {% for q in quizzes %}
         <tr>
-          <td class="py-3 px-2 font-medium">Algebra Basics</td>
-          <td class="py-3 px-2 text-gray-500">10</td>
-          <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Completed</span></td>
-          <td class="py-3 px-2 text-blue-600 font-semibold">88%</td>
+          <td class="py-3 px-2 font-medium">{{ q.title }}</td>
+          <td class="py-3 px-2 text-gray-500">{{ q.questions }}</td>
+          <td class="py-3 px-2">
+            {% if q.status == 'Completed' %}
+              <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">{{ q.status }}</span>
+            {% elif q.status == 'Pending' %}
+              <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">{{ q.status }}</span>
+            {% else %}
+              <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">{{ q.status }}</span>
+            {% endif %}
+          </td>
+          <td class="py-3 px-2">
+            {% if q.score %}
+              <span class="text-blue-600 font-semibold">{{ q.score }}%</span>
+            {% else %}
+              <span class="text-gray-400">--</span>
+            {% endif %}
+          </td>
           <td class="py-3 px-2 text-right">
-            <button class="text-primary hover:underline text-sm">View Result</button>
+            {% if q.status == 'Pending' %}
+              <a href="{% url 'std_take_quiz' %}" class="bg-primary text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Start Quiz</a>
+            {% else %}
+              <a href="{% url 'std_quiz_result' %}" class="text-primary hover:underline text-sm">View Result</a>
+            {% endif %}
           </td>
         </tr>
-        <tr>
-          <td class="py-3 px-2 font-medium">Linear Equations</td>
-          <td class="py-3 px-2 text-gray-500">8</td>
-          <td class="py-3 px-2"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Pending</span></td>
-          <td class="py-3 px-2 text-gray-400">--</td>
-          <td class="py-3 px-2 text-right">
-            <button class="bg-primary text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Start Quiz</button>
-          </td>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="text-gray-500 text-center py-8">No quizzes available yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- PERFORMANCE -->
+<div id="section-performance" class="tab-section hidden">
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold mb-4">Performance Overview</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Highest Score</p>
+        <p class="text-2xl font-semibold text-green-600">{{ performance.highest }}%</p>
+      </div>
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Lowest Score</p>
+        <p class="text-2xl font-semibold text-red-600">{{ performance.lowest }}%</p>
+      </div>
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Average</p>
+        <p class="text-2xl font-semibold text-blue-600">{{ performance.average }}%</p>
+      </div>
+    </div>
+
+    <h3 class="font-semibold mb-3 text-gray-700">Quiz History</h3>
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="text-left text-gray-500 border-b">
+          <th class="py-2 px-2">Quiz</th>
+          <th class="py-2 px-2">Date</th>
+          <th class="py-2 px-2">Score</th>
+          <th class="py-2 px-2">Feedback</th>
         </tr>
+      </thead>
+      <tbody class="divide-y">
+        {% for h in performance.history %}
         <tr>
-          <td class="py-3 px-2 font-medium">Geometry Fundamentals</td>
-          <td class="py-3 px-2 text-gray-500">7</td>
-          <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Completed</span></td>
-          <td class="py-3 px-2 text-blue-600 font-semibold">92%</td>
-          <td class="py-3 px-2 text-right">
-            <button class="text-primary hover:underline text-sm">View Result</button>
-          </td>
+          <td class="py-3 px-2 font-medium">{{ h.quiz }}</td>
+          <td class="py-3 px-2 text-gray-500">{{ h.date }}</td>
+          <td class="py-3 px-2 text-blue-600 font-semibold">{{ h.score }}%</td>
+          <td class="py-3 px-2 text-gray-600">{{ h.feedback }}</td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
 
-<!-- Performance Section -->
-<div id="section-performance" class="tab-section hidden">
+<!-- CLASSMATES -->
+<div id="section-classmates" class="tab-section hidden">
   <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
-    <h2 class="text-lg font-semibold mb-4">Performance Overview</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      <div class="text-center border rounded-xl p-4 bg-gray-50">
-        <p class="text-sm text-gray-500 mb-1">Highest Score</p>
-        <p class="text-2xl font-semibold text-green-600">95%</p>
-      </div>
-      <div class="text-center border rounded-xl p-4 bg-gray-50">
-        <p class="text-sm text-gray-500 mb-1">Lowest Score</p>
-        <p class="text-2xl font-semibold text-red-600">63%</p>
-      </div>
-      <div class="text-center border rounded-xl p-4 bg-gray-50">
-        <p class="text-sm text-gray-500 mb-1">Average</p>
-        <p class="text-2xl font-semibold text-blue-600">81%</p>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="font-semibold mb-3 text-gray-700">Quiz History</h3>
-      <table class="min-w-full text-sm">
-        <thead>
-          <tr class="text-left text-gray-500 border-b">
-            <th class="py-2 px-2">Quiz</th>
-            <th class="py-2 px-2">Date</th>
-            <th class="py-2 px-2">Score</th>
-            <th class="py-2 px-2">Feedback</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y">
-          <tr>
-            <td class="py-3 px-2 font-medium">Algebra Basics</td>
-            <td class="py-3 px-2 text-gray-500">Oct 5, 2025</td>
-            <td class="py-3 px-2 text-green-600 font-semibold">88%</td>
-            <td class="py-3 px-2 text-gray-600">Good understanding, minor algebraic errors.</td>
-          </tr>
-          <tr>
-            <td class="py-3 px-2 font-medium">Geometry Fundamentals</td>
-            <td class="py-3 px-2 text-gray-500">Oct 8, 2025</td>
-            <td class="py-3 px-2 text-blue-600 font-semibold">92%</td>
-            <td class="py-3 px-2 text-gray-600">Excellent grasp of geometry basics.</td>
-          </tr>
-          <tr>
-            <td class="py-3 px-2 font-medium">Trigonometry Practice</td>
-            <td class="py-3 px-2 text-gray-500">Oct 11, 2025</td>
-            <td class="py-3 px-2 text-yellow-600 font-semibold">75%</td>
-            <td class="py-3 px-2 text-gray-600">Needs more work on sine and cosine rules.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h2 class="text-lg font-semibold mb-4">Your Classmates</h2>
+    {% if classmates %}
+    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {% for mate in classmates %}
+      <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-100 hover:bg-white transition shadow-sm">
+        <div class="flex-shrink-0 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg">
+          {{ mate.first_name|first|default:"U" }}
+        </div>
+        <div>
+          <p class="font-medium text-gray-800">{{ mate.first_name }} {{ mate.last_name }}</p>
+          <p class="text-xs text-gray-500">{{ mate.email }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-500 text-center py-8">No classmates found yet.</p>
+    {% endif %}
   </div>
 </div>
 
-<!-- Tab Switcher Script -->
+<!-- Leave Class Modal -->
+<div id="leaveModal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="relative max-w-md mx-auto mt-40 bg-white rounded-2xl shadow-xl border border-gray-100">
+    <div class="flex items-center justify-between px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-red-600">Leave Class</h3>
+      <button id="closeLeaveModal" class="p-2 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <form method="POST" action="{% url 'std_leave_class' course.id %}" class="px-6 py-5 space-y-4">
+      {% csrf_token %}
+      <p class="text-gray-600 text-sm">
+        Are you sure you want to leave <span class="font-semibold text-gray-800">{{ course.title }}</span>? 
+        You’ll lose access to all materials and quizzes for this class.
+      </p>
+      <div class="flex justify-end gap-2">
+        <button type="button" id="cancelLeave" class="px-4 py-2 rounded-xl border hover:bg-gray-50">Cancel</button>
+        <button type="submit" class="px-4 py-2 rounded-xl bg-red-600 text-white hover:bg-red-700">Leave Class</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- JS -->
 <script>
   const tabs = {
     materials: document.getElementById('section-materials'),
     quizzes: document.getElementById('section-quizzes'),
-    performance: document.getElementById('section-performance')
+    performance: document.getElementById('section-performance'),
+    classmates: document.getElementById('section-classmates')
   };
   const buttons = document.querySelectorAll('.tab-btn');
   buttons.forEach(btn => {
@@ -202,6 +246,20 @@
       tabs[target].classList.remove('hidden');
     });
   });
+
+  const openLeaveModal = document.getElementById('openLeaveModal');
+  const closeLeaveModal = document.getElementById('closeLeaveModal');
+  const cancelLeave = document.getElementById('cancelLeave');
+  const leaveModal = document.getElementById('leaveModal');
+
+  function openModal() { leaveModal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+  function closeModal() { leaveModal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+
+  openLeaveModal?.addEventListener('click', openModal);
+  closeLeaveModal?.addEventListener('click', closeModal);
+  cancelLeave?.addEventListener('click', closeModal);
+  leaveModal?.addEventListener('click', e => { if (e.target === leaveModal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !leaveModal.classList.contains('hidden')) closeModal(); });
 </script>
 
 {% endblock %}
