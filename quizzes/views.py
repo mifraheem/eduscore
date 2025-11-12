@@ -11,6 +11,7 @@ from .models import Quiz, Question
 def quiz_list(request):
     """List all quizzes created by the logged-in teacher."""
     quizzes = Quiz.objects.filter(created_by=request.user).select_related('course').order_by('-created_at')
+    print(f"Your Quizes Are: {quizzes}")
     return render(request, 'teacher/quiz_list.html', {'quizzes': quizzes})
 
 
@@ -78,3 +79,103 @@ def add_questions(request, quiz_id):
 
     questions = quiz.questions.all()
     return render(request, 'teacher/add_questions.html', {'quiz': quiz, 'questions': questions})
+
+
+@login_required
+@role('teacher')
+def quiz_ai_generate(request, class_id):
+    course = get_object_or_404(Course, id=class_id, teacher=request.user)
+
+    if request.method == "POST":
+        payload = {
+            "course_id": course.id,
+            "total_questions": request.POST.get("total_questions"),
+            "total_marks": request.POST.get("total_marks"),
+            "difficulty": request.POST.get("difficulty"),
+            "materials": request.POST.getlist("materials"),
+        }
+
+        # 🔥 MOCKED AI RESPONSE (Demo Mode)
+        generated_quiz = {
+            "title": f"{course.title} – AI Generated Quiz",
+            "questions": [
+                {
+                    "question": "What is the purpose of algebra?",
+                    "options": ["To solve equations", "To cook food", "To play games", "To measure liquids"],
+                    "answer": "A",
+                    "marks": 2,
+                },
+                {
+                    "question": "Which shape has 4 equal sides?",
+                    "options": ["Triangle", "Circle", "Square", "Hexagon"],
+                    "answer": "C",
+                    "marks": 2,
+                }
+            ]
+        }
+
+        request.session["ai_quiz_preview"] = generated_quiz
+        request.session["ai_quiz_course"] = course.id
+
+        return redirect("quiz_ai_preview")
+
+    return redirect("class_view", class_id=course.id)
+
+
+@login_required
+@role('teacher')
+def quiz_ai_preview(request):
+    data = request.session.get("ai_quiz_preview")
+    course_id = request.session.get("ai_quiz_course")
+
+    if not data or not course_id:
+        messages.error(request, "AI quiz data not found.")
+        return redirect("teacher_dashboard")
+
+    course = get_object_or_404(Course, id=course_id, teacher=request.user)
+
+    return render(request, 'teacher/quiz_ai_preview.html', {
+        "course": course,
+        "quiz": data,
+    })
+
+
+@login_required
+@role('teacher')
+def quiz_ai_save(request):
+    if request.method != "POST":
+        return redirect("teacher_dashboard")
+
+    course_id = request.session.get("ai_quiz_course")
+    course = get_object_or_404(Course, id=course_id, teacher=request.user)
+
+    title = request.POST.get("title")
+
+    quiz = Quiz.objects.create(
+        course=course,
+        title=title,
+        description="AI Generated Quiz",
+        time_limit=10,
+        created_by=request.user
+    )
+
+    total = int(request.POST.get("total_questions"))
+
+    for i in range(total):
+        Question.objects.create(
+            quiz=quiz,
+            text=request.POST.get(f"q{i}_text"),
+            option_a=request.POST.get(f"q{i}_a"),
+            option_b=request.POST.get(f"q{i}_b"),
+            option_c=request.POST.get(f"q{i}_c"),
+            option_d=request.POST.get(f"q{i}_d"),
+            correct_option=request.POST.get(f"q{i}_correct"),
+            marks=request.POST.get(f"q{i}_marks"),
+        )
+
+    # Clear session
+    request.session.pop("ai_quiz_preview", None)
+    request.session.pop("ai_quiz_course", None)
+
+    messages.success(request, f"AI Quiz '{quiz.title}' saved successfully!")
+    return redirect("quiz_list")

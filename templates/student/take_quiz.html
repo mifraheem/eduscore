@@ -1,6 +1,6 @@
 {% extends "sbase.html" %}
-{% block title %}EduScore | Take Quiz{% endblock %}
-{% block header_title %}Algebra Basics Quiz{% endblock %}
+{% block title %}Take Quiz - {{ quiz.title }}{% endblock %}
+{% block header_title %}{{ quiz.title }}{% endblock %}
 {% block header_subtitle %}Answer all questions carefully and submit before time runs out{% endblock %}
 
 {% block content %}
@@ -8,13 +8,17 @@
 <!-- Quiz Header -->
 <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
   <div>
-    <h2 class="text-lg font-semibold text-primary">Grade 10 – Mathematics</h2>
-    <p class="text-sm text-gray-500">Instructor: Mr. Ahmed • 10 Questions</p>
+    <h2 class="text-lg font-semibold text-primary">{{ quiz.course.title }}</h2>
+    <p class="text-sm text-gray-500">
+      Instructor: {{ quiz.course.teacher.first_name }} • {{ questions.count }} Questions
+    </p>
   </div>
   <div class="flex items-center gap-3 mt-4 sm:mt-0">
     <div class="bg-gray-100 border border-gray-200 rounded-xl px-4 py-2 text-center">
       <p class="text-xs text-gray-500">Time Left</p>
-      <p id="timer" class="text-lg font-semibold text-red-600">15:00</p>
+      <p id="timer" class="text-lg font-semibold text-red-600">
+        {{ quiz.time_limit }}:00
+      </p>
     </div>
     <button class="bg-primary text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-primary/90" id="submitQuizTop">
       Submit Quiz
@@ -23,78 +27,40 @@
 </div>
 
 <!-- Quiz Body -->
-<form id="quizForm" class="space-y-8">
+<form id="quizForm" method="POST" class="space-y-8">
+  {% csrf_token %}
 
-  <!-- Question 1 -->
+  {% for q in questions %}
   <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
     <div class="flex items-start justify-between mb-4">
-      <h3 class="font-semibold text-lg">1. What does the term "variable" represent in algebra?</h3>
-      <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">1 Point</span>
+      <h3 class="font-semibold text-lg">{{ forloop.counter }}. {{ q.text }}</h3>
+      <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">{{ q.marks }} Point</span>
     </div>
+
+    <!-- Options -->
     <div class="space-y-2 text-sm">
       <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q1" class="mr-2 text-primary focus:ring-primary"> A fixed numerical value
+        <input type="radio" name="q{{ q.id }}" value="A" class="mr-2"> {{ q.option_a }}
       </label>
       <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q1" class="mr-2 text-primary focus:ring-primary"> A symbol representing an unknown number
+        <input type="radio" name="q{{ q.id }}" value="B" class="mr-2"> {{ q.option_b }}
       </label>
       <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q1" class="mr-2 text-primary focus:ring-primary"> A constant equation
+        <input type="radio" name="q{{ q.id }}" value="C" class="mr-2"> {{ q.option_c }}
       </label>
       <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q1" class="mr-2 text-primary focus:ring-primary"> A mathematical operation
+        <input type="radio" name="q{{ q.id }}" value="D" class="mr-2"> {{ q.option_d }}
       </label>
     </div>
   </div>
-
-  <!-- Question 2 -->
-  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
-    <div class="flex items-start justify-between mb-4">
-      <h3 class="font-semibold text-lg">2. Which of the following is a linear equation?</h3>
-      <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">1 Point</span>
-    </div>
-    <div class="space-y-2 text-sm">
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q2" class="mr-2 text-primary focus:ring-primary"> x² + y² = 16
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q2" class="mr-2 text-primary focus:ring-primary"> 2x + 3 = 7
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q2" class="mr-2 text-primary focus:ring-primary"> x³ + 4 = 12
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q2" class="mr-2 text-primary focus:ring-primary"> xy = 12
-      </label>
-    </div>
-  </div>
-
-  <!-- Question 3 -->
-  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
-    <div class="flex items-start justify-between mb-4">
-      <h3 class="font-semibold text-lg">3. Solve for x: 2x + 3 = 7</h3>
-      <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">1 Point</span>
-    </div>
-    <div class="space-y-2 text-sm">
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q3" class="mr-2 text-primary focus:ring-primary"> x = 1
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q3" class="mr-2 text-primary focus:ring-primary"> x = 2
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q3" class="mr-2 text-primary focus:ring-primary"> x = 3
-      </label>
-      <label class="block p-3 rounded-lg border hover:bg-gray-50 cursor-pointer">
-        <input type="radio" name="q3" class="mr-2 text-primary focus:ring-primary"> x = 4
-      </label>
-    </div>
-  </div>
+  {% endfor %}
 
   <!-- Submit Button -->
   <div class="flex justify-between items-center mt-10">
     <p class="text-sm text-gray-500">Make sure to review all answers before submitting.</p>
-    <button type="submit" class="bg-primary text-white px-6 py-2 rounded-xl font-semibold hover:bg-primary/90">Submit Quiz</button>
+    <button type="submit" class="bg-primary text-white px-6 py-2 rounded-xl font-semibold hover:bg-primary/90">
+      Submit Quiz
+    </button>
   </div>
 </form>
 
@@ -103,7 +69,7 @@
   <div class="absolute inset-0 bg-black/50"></div>
   <div class="relative max-w-md mx-auto mt-40 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
     <h3 class="text-lg font-semibold mb-3 text-gray-800">Submit Quiz?</h3>
-    <p class="text-sm text-gray-600 mb-5">Once you submit, you won’t be able to change your answers.</p>
+    <p class="text-sm text-gray-600 mb-5">Once submitted, answers cannot be changed.</p>
     <div class="flex justify-end gap-3">
       <button id="cancelSubmit" class="px-4 py-2 border rounded-xl hover:bg-gray-50">Cancel</button>
       <button id="confirmSubmit" class="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary/90">Submit</button>
@@ -113,54 +79,38 @@
 
 <!-- Script -->
 <script>
-  // Countdown timer (15 min)
-  let timeLeft = 15 * 60;
+  // Countdown timer
+  let timeLeft = {{ quiz.time_limit }} * 60;
   const timerDisplay = document.getElementById('timer');
+
   const updateTimer = () => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      showModal();
-    } else {
-      timeLeft--;
+      quizForm.submit();
     }
+
+    timeLeft--;
   };
+
   const timerInterval = setInterval(updateTimer, 1000);
 
-  // Modal controls
+  // Modal
   const modal = document.getElementById('submitModal');
   const cancelSubmit = document.getElementById('cancelSubmit');
   const confirmSubmit = document.getElementById('confirmSubmit');
   const submitQuizTop = document.getElementById('submitQuizTop');
   const quizForm = document.getElementById('quizForm');
 
-  function showModal() {
-    modal.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-  }
-  function closeModal() {
-    modal.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
-  }
+  function showModal() { modal.classList.remove('hidden'); }
+  function closeModal() { modal.classList.add('hidden'); }
 
-  submitQuizTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    showModal();
-  });
-
+  submitQuizTop.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
   cancelSubmit.addEventListener('click', closeModal);
-
-  confirmSubmit.addEventListener('click', () => {
-    closeModal();
-    alert('Quiz submitted successfully! (mock)');
-  });
-
-  quizForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    showModal();
-  });
+  confirmSubmit.addEventListener('click', () => { quizForm.submit(); });
 </script>
 
 {% endblock %}

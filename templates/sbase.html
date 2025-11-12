@@ -48,8 +48,7 @@
       <div class="hidden md:flex gap-8 text-sm font-medium">
         <a href="{% url 'student_dashboard' %}" class="hover:text-primary transition">Dashboard</a>
         <a href="{% url 'std_classes' %}" class="hover:text-primary transition">My Classes</a>
-        <a href="{% url 'std_take_quiz' %}" class="hover:text-primary transition">Take Quiz</a>
-        <a href="{% url 'std_quiz_result' %}" class="hover:text-primary transition">Quiz Result</a>
+        <a href="{% url 'std_quiz_result' user.id %}" class="hover:text-primary transition">Quiz Result</a>
         <a href="#" class="hover:text-primary transition">Results</a>
       </div>
 

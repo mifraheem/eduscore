@@ -1,0 +1,102 @@
+{% extends "tbase.html" %}
+{% block title %}AI Quiz Preview{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow border border-gray-100">
+
+    <h1 class="text-2xl font-semibold mb-2 text-purple-700">AI Generated Quiz Preview</h1>
+    <p class="text-gray-500 mb-6">Review & edit the quiz before saving.</p>
+
+    <form method="POST" action="{% url 'quiz_ai_save' %}">
+        {% csrf_token %}
+
+        <!-- Quiz Title -->
+        <div class="mb-6">
+            <label class="font-medium text-sm mb-1 block">Quiz Title</label>
+            <input type="text" name="title" value="{{ quiz.title }}"
+                   class="w-full px-4 py-2 rounded-xl border focus:ring-2 focus:ring-purple-300" required>
+        </div>
+
+        <h2 class="text-lg font-semibold mb-3">Questions</h2>
+
+        <input type="hidden" name="total_questions" value="{{ quiz.questions|length }}">
+
+        <div class="space-y-6">
+            {% for q in quiz.questions %}
+            <div class="border p-5 rounded-xl bg-gray-50 shadow-sm">
+
+                <h3 class="font-semibold mb-3">Question {{ forloop.counter }}</h3>
+
+                <!-- Question Text -->
+                <textarea name="q{{ forloop.counter0 }}_text" rows="2"
+                    class="w-full px-3 py-2 rounded-xl border focus:ring-2 focus:ring-purple-300 mb-4">{{ q.question }}</textarea>
+
+                <!-- Options -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="text-sm font-medium">Option A</label>
+                        <input type="text" name="q{{ forloop.counter0 }}_a"
+                               value="{{ q.options.0 }}"
+                               class="w-full px-3 py-2 rounded-xl border">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">Option B</label>
+                        <input type="text" name="q{{ forloop.counter0 }}_b"
+                               value="{{ q.options.1 }}"
+                               class="w-full px-3 py-2 rounded-xl border">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">Option C</label>
+                        <input type="text" name="q{{ forloop.counter0 }}_c"
+                               value="{{ q.options.2 }}"
+                               class="w-full px-3 py-2 rounded-xl border">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">Option D</label>
+                        <input type="text" name="q{{ forloop.counter0 }}_d"
+                               value="{{ q.options.3 }}"
+                               class="w-full px-3 py-2 rounded-xl border">
+                    </div>
+                </div>
+
+                <!-- Correct Option -->
+                <div class="mb-3">
+                    <label class="text-sm font-medium">Correct Answer</label>
+                    <select name="q{{ forloop.counter0 }}_correct"
+                        class="w-full px-3 py-2 rounded-xl border">
+                        <option value="A" {% if q.answer == 'A' %}selected{% endif %}>A</option>
+                        <option value="B" {% if q.answer == 'B' %}selected{% endif %}>B</option>
+                        <option value="C" {% if q.answer == 'C' %}selected{% endif %}>C</option>
+                        <option value="D" {% if q.answer == 'D' %}selected{% endif %}>D</option>
+                    </select>
+                </div>
+
+                <!-- Marks -->
+                <div>
+                    <label class="text-sm font-medium">Marks</label>
+                    <input type="number" name="q{{ forloop.counter0 }}_marks"
+                           value="{{ q.marks }}"
+                           class="w-full px-3 py-2 rounded-xl border">
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-3 mt-8">
+            <a href="{% url 'class_view' course.id %}"
+               class="px-4 py-2 rounded-xl border hover:bg-gray-100">Cancel</a>
+
+            <button type="submit"
+                class="px-6 py-2 bg-purple-600 text-white rounded-xl shadow hover:bg-purple-700">
+                Save Quiz
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

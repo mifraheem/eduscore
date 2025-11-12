@@ -162,11 +162,12 @@ def generate_quiz(request):
     return render(request, 'teacher/generate_quiz.html')
 
 
-@login_required
-@role('teacher')
-def quiz_list(request):
-    """Placeholder for teacher's quizzes."""
-    return render(request, 'teacher/quiz_list.html')
+# @login_required
+# @role('teacher')
+# def quiz_list(request):
+#     """Placeholder for teacher's quizzes."""
+
+#     return render(request, 'teacher/quiz_list.html')
 
 
 @login_required

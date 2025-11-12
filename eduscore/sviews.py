@@ -4,8 +4,14 @@ from django.contrib import messages
 from users.decorators import role
 from courses.models import Course, Enrollment, Material
 from users.models import User
-# from quizzes.models import Quiz, QuizAttempt  # uncomment later when quiz model added
-
+from quizzes.models import Quiz, QuizAttempt  # uncomment later when quiz model added
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from users.decorators import role
+from courses.models import Course, Enrollment, Material
+from quizzes.models import Quiz, Question, QuizAttempt
+from users.models import User
 
 @login_required
 @role('student')
@@ -45,47 +51,87 @@ def std_classes(request):
     return render(request, 'student/classes.html', context)
 
 
+
+
+
 @login_required
 @role('student')
 def class_view(request, class_id):
-    """Detailed class page for student: materials, classmates, and performance."""
+    """Student view for class details, materials, quizzes, performance, classmates."""
+
     course = get_object_or_404(Course, id=class_id)
-    enrollment = get_object_or_404(Enrollment, course=course, student=request.user)
 
-    # All materials for this course
-    materials = Material.objects.filter(course=course).order_by('-uploaded_at')
+    # Ensure student is part of the class
+    enrollment = get_object_or_404(Enrollment, student=request.user, course=course)
 
-    # Classmates (exclude current student)
+    # ---------- MATERIALS ----------
+    materials = Material.objects.filter(course=course).order_by("-uploaded_at")
+
+    # ---------- CLASSMATES ----------
     classmates = User.objects.filter(
-        enrollments__course=course, role='student'
+        enrollments__course=course,
+        role="student"
     ).exclude(id=request.user.id).distinct()
 
-    # Mock quizzes (to be replaced with real model later)
-    quizzes = [
-        {"title": "Algebra Basics", "questions": 10, "status": "Completed", "score": 88},
-        {"title": "Linear Equations", "questions": 8, "status": "Pending", "score": None},
-        {"title": "Geometry Fundamentals", "questions": 7, "status": "Completed", "score": 92},
-    ]
+    # ---------- QUIZZES ----------
+    quizzes = Quiz.objects.filter(course=course).order_by("-created_at")
+
+    quiz_rows = []
+    for quiz in quizzes:
+        attempt = QuizAttempt.objects.filter(student=request.user, quiz=quiz).first()
+
+        if attempt:
+            status = "Completed"
+            score = attempt.score
+        else:
+            status = "Pending"
+            score = None
+
+        quiz_rows.append({
+            "id": quiz.id,
+            "title": quiz.title,
+            "questions": quiz.questions.count(),
+            "status": status,
+            "score": score,
+        })
+
+    # ---------- PERFORMANCE ----------
+    attempts = QuizAttempt.objects.filter(student=request.user, quiz__course=course)
+
+    if attempts.exists():
+        highest = attempts.order_by("-score").first().score
+        lowest = attempts.order_by("score").first().score
+        average = round(sum(a.score for a in attempts) / attempts.count(), 2)
+
+        history = [
+            {
+                "quiz": a.quiz.title,
+                "date": a.created_at.strftime("%b %d, %Y"),
+                "score": a.score,
+                "feedback": a.feedback or "No feedback"
+            }
+            for a in attempts.order_by("-created_at")
+        ]
+    else:
+        highest = 0
+        lowest = 0
+        average = 0
+        history = []
 
     performance = {
-        "highest": 95,
-        "lowest": 63,
-        "average": 81,
-        "history": [
-            {"quiz": "Algebra Basics", "date": "Oct 5, 2025", "score": 88, "feedback": "Good understanding, minor algebraic errors."},
-            {"quiz": "Geometry Fundamentals", "date": "Oct 8, 2025", "score": 92, "feedback": "Excellent grasp of geometry basics."},
-            {"quiz": "Trigonometry Practice", "date": "Oct 11, 2025", "score": 75, "feedback": "Needs more work on sine and cosine rules."},
-        ]
+        "highest": highest,
+        "lowest": lowest,
+        "average": average,
+        "history": history,
     }
 
-    context = {
-        'course': course,
-        'materials': materials,
-        'classmates': classmates,
-        'quizzes': quizzes,
-        'performance': performance,
-    }
-    return render(request, 'student/class_view.html', context)
+    return render(request, "student/class_view.html", {
+        "course": course,
+        "materials": materials,
+        "classmates": classmates,
+        "quizzes": quiz_rows,
+        "performance": performance,
+    })
 
 
 
@@ -110,14 +156,60 @@ def leave_class(request, class_id):
 
 @login_required
 @role('student')
-def take_quiz(request):
-    return render(request, 'student/take_quiz.html')
+def std_take_quiz(request, quiz_id):
+    """Display quiz to student and evaluate answers."""
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    
+    # Must be enrolled in this class
+    if not Enrollment.objects.filter(course=quiz.course, student=request.user).exists():
+        messages.error(request, "You are not enrolled in this class.")
+        return redirect("std_classes")
 
+    # Already attempted?
+    attempt = QuizAttempt.objects.filter(student=request.user, quiz=quiz).first()
+    if attempt:
+        return redirect("std_quiz_result", attempt_id=attempt.id)
+
+    questions = quiz.questions.all()
+
+    # -------- POST: Submit Quiz -------- #
+    if request.method == "POST":
+        total_score = 0
+        obtained_score = 0
+
+        for q in questions:
+            total_score += q.marks
+            selected = request.POST.get(f"q{q.id}")
+
+            if selected and selected == q.correct_option:
+                obtained_score += q.marks
+
+        # Save attempt
+        attempt = QuizAttempt.objects.create(
+            student=request.user,
+            quiz=quiz,
+            score=obtained_score,
+            total_marks=total_score,
+            feedback="Auto-evaluated."
+        )
+
+        return redirect("std_quiz_result", attempt_id=attempt.id)
+
+    return render(request, "student/take_quiz.html", {
+        "quiz": quiz,
+        "questions": questions,
+    })
 
 @login_required
 @role('student')
-def quiz_result(request):
-    return render(request, 'student/quiz_result.html')
+def std_quiz_result(request, attempt_id):
+    attempt = get_object_or_404(QuizAttempt, id=attempt_id, student=request.user)
+
+    return render(request, "student/quiz_result.html", {
+        "attempt": attempt,
+        "quiz": attempt.quiz,
+        "course": attempt.quiz.course,
+    })
 
 
 @login_required

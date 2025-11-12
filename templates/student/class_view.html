@@ -119,9 +119,9 @@
           </td>
           <td class="py-3 px-2 text-right">
             {% if q.status == 'Pending' %}
-              <a href="{% url 'std_take_quiz' %}" class="bg-primary text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Start Quiz</a>
+              <a href="{% url 'std_take_quiz' q.id %}" class="bg-primary text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Start Quiz</a>
             {% else %}
-              <a href="{% url 'std_quiz_result' %}" class="text-primary hover:underline text-sm">View Result</a>
+              <a href="{% url 'std_quiz_result' user.id %}" class="text-primary hover:underline text-sm">View Result</a>
             {% endif %}
           </td>
         </tr>
