@@ -21,5 +21,5 @@ def quiz_list(request):
 def quiz_result(request):
     return render(request, 'teacher/quiz_result.html')
 
-def dashboard(request):
+def teacher_dashboard(request):
     return render(request, 'teacher/dashboard.html')

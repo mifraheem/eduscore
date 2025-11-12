@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-def dashboard(request):
+def student_dashboard(request):
     return render(request, 'student/dashboard.html')
 
 def classes(request):
