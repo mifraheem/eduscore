@@ -1,0 +1,119 @@
+{% extends "sbase.html" %}
+{% block title %}EduScore | Student Profile{% endblock %}
+{% block header_title %}My Profile{% endblock %}
+{% block header_subtitle %}View your personal details, progress, and overall performance{% endblock %}
+
+{% block content %}
+
+<!-- Profile Overview -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+    <div class="flex items-center gap-5">
+      <img src="#" alt="Student Avatar" class="h-20 w-20 rounded-full border-4 border-primary/20 shadow-sm">
+      <div>
+        <h2 class="text-xl font-semibold text-primary">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+        <p class="text-gray-500 text-sm">{{ request.user.email }}</p>
+        <p class="text-gray-600 text-sm mt-1">Role: <span class="font-medium text-gray-800">Student</span></p>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <button class="border border-gray-300 px-5 py-2 rounded-xl hover:bg-gray-50 text-sm font-medium">Edit Profile</button>
+      <button class="bg-primary text-white px-6 py-2 rounded-xl hover:bg-primary/90 text-sm font-medium">Download Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
+    <p class="text-sm text-gray-500">Total Classes Joined</p>
+    <p class="text-2xl font-semibold text-blue-600 mt-1">6</p>
+  </div>
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
+    <p class="text-sm text-gray-500">Quizzes Attempted</p>
+    <p class="text-2xl font-semibold text-green-600 mt-1">18</p>
+  </div>
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
+    <p class="text-sm text-gray-500">Average Score</p>
+    <p class="text-2xl font-semibold text-yellow-600 mt-1">84%</p>
+  </div>
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 text-center">
+    <p class="text-sm text-gray-500">Rank in Class</p>
+    <p class="text-2xl font-semibold text-purple-600 mt-1">#3</p>
+  </div>
+</div>
+
+<!-- Performance Charts -->
+<div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6 mb-8">
+  <h3 class="text-lg font-semibold mb-4">Performance Overview</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="border rounded-xl p-5 bg-gray-50">
+      <p class="text-sm text-gray-500 mb-2">Average Score Trend</p>
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div class="bg-blue-500 h-3 rounded-full" style="width: 84%;"></div>
+      </div>
+      <p class="text-xs text-gray-500 text-right">+6% since last month</p>
+    </div>
+
+    <div class="border rounded-xl p-5 bg-gray-50">
+      <p class="text-sm text-gray-500 mb-2">Quiz Accuracy</p>
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div class="bg-green-500 h-3 rounded-full" style="width: 90%;"></div>
+      </div>
+      <p class="text-xs text-gray-500 text-right">Consistent improvement</p>
+    </div>
+
+    <div class="border rounded-xl p-5 bg-gray-50">
+      <p class="text-sm text-gray-500 mb-2">Engagement Level</p>
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div class="bg-yellow-500 h-3 rounded-full" style="width: 75%;"></div>
+      </div>
+      <p class="text-xs text-gray-500 text-right">Active in most classes</p>
+    </div>
+
+    <div class="border rounded-xl p-5 bg-gray-50">
+      <p class="text-sm text-gray-500 mb-2">Completion Rate</p>
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+        <div class="bg-purple-500 h-3 rounded-full" style="width: 92%;"></div>
+      </div>
+      <p class="text-xs text-gray-500 text-right">Excellent consistency</p>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+  <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+  <ul class="divide-y">
+    <li class="py-3 flex justify-between items-center">
+      <div>
+        <p class="font-medium text-gray-800">Scored 92% in Geometry Fundamentals</p>
+        <p class="text-xs text-gray-500">2 hours ago • Grade 10 – Mathematics</p>
+      </div>
+      <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">Completed</span>
+    </li>
+    <li class="py-3 flex justify-between items-center">
+      <div>
+        <p class="font-medium text-gray-800">Viewed Trigonometry Notes</p>
+        <p class="text-xs text-gray-500">Yesterday • Grade 10 – Mathematics</p>
+      </div>
+      <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">Viewed</span>
+    </li>
+    <li class="py-3 flex justify-between items-center">
+      <div>
+        <p class="font-medium text-gray-800">Attempted Quiz – Algebra Basics</p>
+        <p class="text-xs text-gray-500">2 days ago • Grade 10 – Mathematics</p>
+      </div>
+      <span class="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">Pending Review</span>
+    </li>
+    <li class="py-3 flex justify-between items-center">
+      <div>
+        <p class="font-medium text-gray-800">Joined Class – Computer Science</p>
+        <p class="text-xs text-gray-500">3 days ago • Grade 11</p>
+      </div>
+      <span class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">New</span>
+    </li>
+  </ul>
+</div>
+
+{% endblock %}

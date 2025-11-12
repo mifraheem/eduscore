@@ -1,0 +1,135 @@
+{% extends "sbase.html" %}
+{% block title %}EduScore | Quiz Results{% endblock %}
+{% block header_title %}Quiz Results – Algebra Basics{% endblock %}
+{% block header_subtitle %}Review your performance, feedback, and improvement suggestions{% endblock %}
+
+{% block content %}
+
+<!-- Summary Section -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 mb-8">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+    <div>
+      <h2 class="text-xl font-semibold text-primary">Algebra Basics</h2>
+      <p class="text-sm text-gray-500">Class: Grade 10 – Mathematics • Attempted on Nov 10, 2025</p>
+    </div>
+    <div class="text-center">
+      <p class="text-sm text-gray-500 mb-1">Your Score</p>
+      <div class="text-4xl font-bold text-green-600">88%</div>
+      <p class="text-xs text-gray-400 mt-1">AI Verified</p>
+    </div>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-4 mt-6 text-center">
+    <div class="border rounded-xl py-4 bg-gray-50">
+      <p class="text-sm text-gray-500">Correct Answers</p>
+      <p class="text-xl font-semibold text-green-600 mt-1">8 / 10</p>
+    </div>
+    <div class="border rounded-xl py-4 bg-gray-50">
+      <p class="text-sm text-gray-500">Incorrect Answers</p>
+      <p class="text-xl font-semibold text-red-600 mt-1">2</p>
+    </div>
+    <div class="border rounded-xl py-4 bg-gray-50">
+      <p class="text-sm text-gray-500">Time Taken</p>
+      <p class="text-xl font-semibold text-blue-600 mt-1">12m 35s</p>
+    </div>
+  </div>
+</div>
+
+<!-- AI Feedback Section -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <h3 class="text-lg font-semibold mb-3 flex items-center gap-2">
+    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m0 0H9m2 0h2M12 6v1m0 10v1m0-1a6 6 0 100-12 6 6 0 000 12z"/>
+    </svg>
+    AI Feedback Summary
+  </h3>
+
+  <div class="bg-gray-50 rounded-xl p-4 text-sm leading-relaxed text-gray-700">
+    <p><strong>Overall Performance:</strong> You demonstrated solid understanding of algebraic fundamentals and
+    problem-solving accuracy.</p>
+    <p class="mt-2"><strong>Areas of Strength:</strong> Equation solving and identification of constants were excellent.</p>
+    <p class="mt-2"><strong>Improvement Tips:</strong> Focus on speed while answering multi-step problems and review
+    variable manipulation topics for better accuracy.</p>
+  </div>
+</div>
+
+<!-- Question Breakdown -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <h3 class="text-lg font-semibold mb-4">Question-wise Breakdown</h3>
+
+  <div class="space-y-4 text-sm">
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <div class="flex items-center justify-between mb-2">
+        <p class="font-medium">1. What does a variable represent in algebra?</p>
+        <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Correct</span>
+      </div>
+      <p class="text-gray-600">✅ Your Answer: A symbol representing an unknown number</p>
+      <p class="text-gray-500">📘 Correct Answer: A symbol representing an unknown number</p>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <div class="flex items-center justify-between mb-2">
+        <p class="font-medium">2. Which of the following is a linear equation?</p>
+        <span class="px-2 py-1 rounded-full bg-red-100 text-red-700 text-xs font-medium">Incorrect</span>
+      </div>
+      <p class="text-gray-600">❌ Your Answer: x² + y² = 16</p>
+      <p class="text-gray-500">📘 Correct Answer: 2x + 3 = 7</p>
+    </div>
+
+    <div class="border rounded-xl p-4 bg-gray-50">
+      <div class="flex items-center justify-between mb-2">
+        <p class="font-medium">3. Solve for x: 2x + 3 = 7</p>
+        <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">Correct</span>
+      </div>
+      <p class="text-gray-600">✅ Your Answer: x = 2</p>
+      <p class="text-gray-500">📘 Correct Answer: x = 2</p>
+    </div>
+  </div>
+</div>
+
+<!-- Performance Analytics -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <h3 class="text-lg font-semibold mb-4">Performance Analytics</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="p-4 border rounded-xl bg-gray-50">
+      <p class="text-sm text-gray-500 mb-1">Accuracy</p>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+        <div class="bg-green-500 h-3 rounded-full" style="width: 88%;"></div>
+      </div>
+      <p class="text-right text-xs text-gray-500 mt-1">88%</p>
+    </div>
+
+    <div class="p-4 border rounded-xl bg-gray-50">
+      <p class="text-sm text-gray-500 mb-1">Speed</p>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+        <div class="bg-blue-500 h-3 rounded-full" style="width: 76%;"></div>
+      </div>
+      <p class="text-right text-xs text-gray-500 mt-1">76%</p>
+    </div>
+
+    <div class="p-4 border rounded-xl bg-gray-50">
+      <p class="text-sm text-gray-500 mb-1">Consistency</p>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+        <div class="bg-yellow-500 h-3 rounded-full" style="width: 83%;"></div>
+      </div>
+      <p class="text-right text-xs text-gray-500 mt-1">83%</p>
+    </div>
+
+    <div class="p-4 border rounded-xl bg-gray-50">
+      <p class="text-sm text-gray-500 mb-1">Improvement Trend</p>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+        <div class="bg-indigo-500 h-3 rounded-full" style="width: 91%;"></div>
+      </div>
+      <p class="text-right text-xs text-gray-500 mt-1">+9% vs last quiz</p>
+    </div>
+  </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row justify-end gap-3">
+  <button class="border border-gray-300 px-5 py-2 rounded-xl hover:bg-gray-50 text-sm font-medium">Review Answers</button>
+  <button class="bg-primary text-white px-6 py-2 rounded-xl hover:bg-primary/90 font-medium">Back to Dashboard</button>
+</div>
+
+{% endblock %}

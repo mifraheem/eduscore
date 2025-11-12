@@ -1,0 +1,150 @@
+{% extends "sbase.html" %}
+{% block title %}EduScore | My Classes{% endblock %}
+{% block header_title %}My Classes{% endblock %}
+{% block header_subtitle %}View and explore all the classes you’ve joined{% endblock %}
+
+{% block content %}
+
+<!-- Search and Stats -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+  <div class="relative">
+    <input type="text" placeholder="Search classes..."
+      class="w-72 pl-10 pr-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white shadow-sm text-sm">
+    <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-400" viewBox="0 0 24 24" fill="none">
+      <path d="M21 21l-4.3-4.3M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <div class="flex gap-3">
+    <div class="bg-white border border-gray-100 rounded-xl px-4 py-2 text-center shadow-sm">
+      <p class="text-xs text-gray-500">Total Classes</p>
+      <p class="text-base font-semibold text-primary">6</p>
+    </div>
+    <div class="bg-white border border-gray-100 rounded-xl px-4 py-2 text-center shadow-sm">
+      <p class="text-xs text-gray-500">Active Quizzes</p>
+      <p class="text-base font-semibold text-green-600">3</p>
+    </div>
+  </div>
+</div>
+
+<!-- Classes Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- Class Card -->
+  <div class="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all p-5">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold group-hover:text-primary transition">Grade 10 – Mathematics</h2>
+        <p class="text-gray-500 text-sm">Instructor: <span class="font-medium">Mr. Ahmed</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Explore algebra, geometry, and trigonometry with practical examples and weekly quizzes.
+    </p>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+        </svg>
+        <span>Last Activity: 2d ago</span>
+      </div>
+      <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Open</button>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all p-5">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold group-hover:text-primary transition">Grade 9 – Physics</h2>
+        <p class="text-gray-500 text-sm">Instructor: <span class="font-medium">Ms. Sara</span></p>
+      </div>
+      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">New</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Learn about motion, forces, and energy through engaging experiments and interactive content.
+    </p>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+        </svg>
+        <span>Last Activity: 5d ago</span>
+      </div>
+      <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Open</button>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all p-5">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold group-hover:text-primary transition">Grade 11 – Computer Science</h2>
+        <p class="text-gray-500 text-sm">Instructor: <span class="font-medium">Mr. Bilal</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Dive into programming, data structures, and algorithms using Python and interactive coding labs.
+    </p>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+        </svg>
+        <span>Last Activity: 1d ago</span>
+      </div>
+      <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Open</button>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all p-5">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold group-hover:text-primary transition">Grade 8 – English</h2>
+        <p class="text-gray-500 text-sm">Instructor: <span class="font-medium">Mr. Imran</span></p>
+      </div>
+      <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">Completed</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Enhance your reading and writing skills through essays, comprehension, and interactive grammar exercises.
+    </p>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+        </svg>
+        <span>Last Activity: 1 week ago</span>
+      </div>
+      <button class="bg-gray-200 text-gray-600 px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-gray-300">Review</button>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all p-5">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold group-hover:text-primary transition">Grade 12 – Chemistry</h2>
+        <p class="text-gray-500 text-sm">Instructor: <span class="font-medium">Ms. Amina</span></p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Active</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+      Study organic and inorganic chemistry concepts with lab-based assessments and AI-generated summaries.
+    </p>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+        </svg>
+        <span>Last Activity: 3d ago</span>
+      </div>
+      <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Open</button>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

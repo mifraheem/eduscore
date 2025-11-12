@@ -1,0 +1,207 @@
+{% extends "sbase.html" %}
+{% block title %}EduScore | Class View{% endblock %}
+{% block header_title %}Grade 10 – Mathematics{% endblock %}
+{% block header_subtitle %}Explore materials, attempt quizzes, and track your progress{% endblock %}
+
+{% block content %}
+
+<!-- Class Overview -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div>
+      <h2 class="text-xl font-semibold text-primary">Mr. Ahmed’s Mathematics Class</h2>
+      <p class="text-gray-500 text-sm">Class Code: <span class="font-mono">MATH10-A</span> • Section A</p>
+    </div>
+    <div class="flex gap-2">
+      <button class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary/90">Join Discussion</button>
+      <button class="border px-4 py-2 rounded-xl text-sm hover:bg-gray-50">Leave Class</button>
+    </div>
+  </div>
+
+  <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+      <p class="text-gray-500">Total Quizzes</p>
+      <p class="text-xl font-semibold text-blue-600 mt-1">5</p>
+    </div>
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+      <p class="text-gray-500">Materials Available</p>
+      <p class="text-xl font-semibold text-green-600 mt-1">8</p>
+    </div>
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+      <p class="text-gray-500">Average Score</p>
+      <p class="text-xl font-semibold text-yellow-600 mt-1">82%</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="flex flex-wrap gap-2 mb-8 border-b border-gray-200 pb-2">
+  <button id="tab-materials" class="tab-btn bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">Study Materials</button>
+  <button id="tab-quizzes" class="tab-btn text-gray-700 hover:text-primary px-4 py-2 rounded-lg text-sm font-medium">Quizzes</button>
+  <button id="tab-performance" class="tab-btn text-gray-700 hover:text-primary px-4 py-2 rounded-lg text-sm font-medium">Performance</button>
+</div>
+
+<!-- Materials Section -->
+<div id="section-materials" class="tab-section">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <!-- Material Card -->
+    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
+      <h3 class="font-semibold text-lg mb-1 text-primary">Algebra – Chapter 1 Notes</h3>
+      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 2 days ago</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">
+        Covers basic algebraic expressions, equations, and problem-solving techniques. Includes examples and exercises.
+      </p>
+      <div class="flex justify-between items-center">
+        <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
+        <a href="#" class="text-sm text-primary hover:underline">Download</a>
+      </div>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
+      <h3 class="font-semibold text-lg mb-1 text-primary">Geometry – Class Slides</h3>
+      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 1 week ago</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">
+        Introduction to geometry basics, shapes, theorems, and formulas. Ideal for mid-term preparation.
+      </p>
+      <div class="flex justify-between items-center">
+        <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
+        <a href="#" class="text-sm text-primary hover:underline">Download</a>
+      </div>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition p-5">
+      <h3 class="font-semibold text-lg mb-1 text-primary">Trigonometry – Practice Problems</h3>
+      <p class="text-gray-500 text-sm mb-3">Uploaded by Mr. Ahmed • 4 days ago</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">
+        A collection of trigonometric identities and real-world problem sets to enhance understanding.
+      </p>
+      <div class="flex justify-between items-center">
+        <button class="bg-primary text-white px-4 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">View Summary</button>
+        <a href="#" class="text-sm text-primary hover:underline">Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quizzes Section -->
+<div id="section-quizzes" class="tab-section hidden">
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold mb-4">Available Quizzes</h2>
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="text-left text-gray-500 border-b">
+          <th class="py-2 px-2">Quiz Title</th>
+          <th class="py-2 px-2">Questions</th>
+          <th class="py-2 px-2">Status</th>
+          <th class="py-2 px-2">Score</th>
+          <th class="py-2 px-2 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr>
+          <td class="py-3 px-2 font-medium">Algebra Basics</td>
+          <td class="py-3 px-2 text-gray-500">10</td>
+          <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Completed</span></td>
+          <td class="py-3 px-2 text-blue-600 font-semibold">88%</td>
+          <td class="py-3 px-2 text-right">
+            <button class="text-primary hover:underline text-sm">View Result</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-3 px-2 font-medium">Linear Equations</td>
+          <td class="py-3 px-2 text-gray-500">8</td>
+          <td class="py-3 px-2"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Pending</span></td>
+          <td class="py-3 px-2 text-gray-400">--</td>
+          <td class="py-3 px-2 text-right">
+            <button class="bg-primary text-white px-3 py-1.5 rounded-xl text-sm font-medium hover:bg-primary/90">Start Quiz</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="py-3 px-2 font-medium">Geometry Fundamentals</td>
+          <td class="py-3 px-2 text-gray-500">7</td>
+          <td class="py-3 px-2"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">Completed</span></td>
+          <td class="py-3 px-2 text-blue-600 font-semibold">92%</td>
+          <td class="py-3 px-2 text-right">
+            <button class="text-primary hover:underline text-sm">View Result</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Performance Section -->
+<div id="section-performance" class="tab-section hidden">
+  <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6">
+    <h2 class="text-lg font-semibold mb-4">Performance Overview</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Highest Score</p>
+        <p class="text-2xl font-semibold text-green-600">95%</p>
+      </div>
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Lowest Score</p>
+        <p class="text-2xl font-semibold text-red-600">63%</p>
+      </div>
+      <div class="text-center border rounded-xl p-4 bg-gray-50">
+        <p class="text-sm text-gray-500 mb-1">Average</p>
+        <p class="text-2xl font-semibold text-blue-600">81%</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-semibold mb-3 text-gray-700">Quiz History</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left text-gray-500 border-b">
+            <th class="py-2 px-2">Quiz</th>
+            <th class="py-2 px-2">Date</th>
+            <th class="py-2 px-2">Score</th>
+            <th class="py-2 px-2">Feedback</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          <tr>
+            <td class="py-3 px-2 font-medium">Algebra Basics</td>
+            <td class="py-3 px-2 text-gray-500">Oct 5, 2025</td>
+            <td class="py-3 px-2 text-green-600 font-semibold">88%</td>
+            <td class="py-3 px-2 text-gray-600">Good understanding, minor algebraic errors.</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Geometry Fundamentals</td>
+            <td class="py-3 px-2 text-gray-500">Oct 8, 2025</td>
+            <td class="py-3 px-2 text-blue-600 font-semibold">92%</td>
+            <td class="py-3 px-2 text-gray-600">Excellent grasp of geometry basics.</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-2 font-medium">Trigonometry Practice</td>
+            <td class="py-3 px-2 text-gray-500">Oct 11, 2025</td>
+            <td class="py-3 px-2 text-yellow-600 font-semibold">75%</td>
+            <td class="py-3 px-2 text-gray-600">Needs more work on sine and cosine rules.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Tab Switcher Script -->
+<script>
+  const tabs = {
+    materials: document.getElementById('section-materials'),
+    quizzes: document.getElementById('section-quizzes'),
+    performance: document.getElementById('section-performance')
+  };
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('bg-primary', 'text-white'));
+      btn.classList.add('bg-primary', 'text-white');
+      Object.values(tabs).forEach(sec => sec.classList.add('hidden'));
+      const target = btn.id.replace('tab-', '');
+      tabs[target].classList.remove('hidden');
+    });
+  });
+</script>
+
+{% endblock %}
