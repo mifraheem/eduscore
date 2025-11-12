@@ -9,6 +9,8 @@ from .sviews import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', home, name='home'),
+    path('quizzes/', include('quizzes.urls')),
+
     path('auth/', include('users.urls')),
     path('classes/', teacher_classes, name='classes'),
     path('classes/<int:class_id>/', teacher_class_view, name='class_view'),

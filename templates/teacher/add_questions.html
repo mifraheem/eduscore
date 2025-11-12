@@ -1,0 +1,70 @@
+{% extends "tbase.html" %}
+{% block title %}Add Questions{% endblock %}
+{% block content %}
+<div class="max-w-5xl mx-auto bg-white rounded-2xl shadow p-8 border border-gray-100">
+  <h1 class="text-2xl font-semibold mb-4 text-primary">Add Questions to "{{ quiz.title }}"</h1>
+
+  <!-- Add Question Form -->
+  <form method="POST" class="space-y-4 mb-10">
+    {% csrf_token %}
+    <div>
+      <label class="block text-sm font-medium mb-1">Question Text</label>
+      <textarea name="text" required rows="2" placeholder="Enter question"
+                class="w-full border rounded-xl px-3 py-2 border-gray-200 focus:ring-2 focus:ring-primary/40"></textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div><input type="text" name="option_a" placeholder="Option A" required class="w-full border rounded-xl px-3 py-2 border-gray-200"></div>
+      <div><input type="text" name="option_b" placeholder="Option B" required class="w-full border rounded-xl px-3 py-2 border-gray-200"></div>
+      <div><input type="text" name="option_c" placeholder="Option C" required class="w-full border rounded-xl px-3 py-2 border-gray-200"></div>
+      <div><input type="text" name="option_d" placeholder="Option D" required class="w-full border rounded-xl px-3 py-2 border-gray-200"></div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Correct Option</label>
+        <select name="correct_option" required class="w-full border rounded-xl px-3 py-2 border-gray-200 focus:ring-2 focus:ring-primary/40">
+          <option value="">Select</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Marks</label>
+        <input type="number" name="marks" value="1" min="1"
+               class="w-full border rounded-xl px-3 py-2 border-gray-200 focus:ring-2 focus:ring-primary/40">
+      </div>
+    </div>
+
+    <div class="text-right">
+      <button type="submit" class="bg-primary text-white px-5 py-2 rounded-xl hover:bg-primary/90">Add Question</button>
+    </div>
+  </form>
+
+  <hr class="mb-6">
+
+  <!-- Questions List -->
+  <h2 class="text-lg font-semibold mb-3">Existing Questions</h2>
+
+  {% if questions %}
+  <div class="grid gap-4">
+    {% for q in questions %}
+    <div class="border border-gray-200 rounded-xl p-4 bg-gray-50">
+      <p class="font-medium">{{ forloop.counter }}. {{ q.text }}</p>
+      <ul class="text-sm text-gray-600 mt-1">
+        <li>A. {{ q.option_a }}</li>
+        <li>B. {{ q.option_b }}</li>
+        <li>C. {{ q.option_c }}</li>
+        <li>D. {{ q.option_d }}</li>
+      </ul>
+      <p class="mt-1 text-sm text-green-700">Correct: {{ q.correct_option }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-gray-500 text-sm">No questions added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

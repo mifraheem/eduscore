@@ -1,26 +1,59 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from courses.models import Course, Enrollment, Material
 from users.models import User
 from django.utils.crypto import get_random_string
+from django.contrib.auth.decorators import login_required
 from users.decorators import role
+from courses.models import Course, Enrollment, Material
+from quizzes.models import Quiz, QuizAttempt
 
 
 @login_required
 @role('teacher')
 def teacher_dashboard(request):
-    """Teacher Dashboard Overview"""
-    courses = Course.objects.filter(teacher=request.user)
-    total_students = Enrollment.objects.filter(course__teacher=request.user).count()
-    total_materials = Material.objects.filter(course__teacher=request.user).count()
+    teacher = request.user
+
+    # All courses taught by teacher
+    courses = Course.objects.filter(teacher=teacher)
+
+    # Stats
+    total_classes = courses.count()
+    total_students = Enrollment.objects.filter(course__teacher=teacher).count()
+    total_quizzes = Quiz.objects.filter(created_by=teacher).count()
+    total_materials = Material.objects.filter(course__teacher=teacher).count()
+
+    # Average score (from quiz attempts)
+    attempts = QuizAttempt.objects.filter(
+        quiz__created_by=teacher, is_submitted=True)
+    if attempts:
+        avg_score = round(sum(a.score for a in attempts) / attempts.count(), 1)
+    else:
+        avg_score = 0
+
+    # Recent classes (limit 4)
+    recent_classes = courses.order_by('-created_at')[:4]
+
+    # Recent quizzes (limit 5)
+    recent_quizzes = Quiz.objects.filter(
+        created_by=teacher).order_by('-created_at')[:5]
+
+    # Student activity (limit 5)
+    recent_activity = QuizAttempt.objects.filter(
+        quiz__created_by=teacher,
+        is_submitted=True
+    ).select_related('quiz', 'student').order_by('-submitted_at')[:5]
 
     context = {
-        'courses': courses,
-        'total_students': total_students,
-        'total_materials': total_materials,
+        "total_classes": total_classes,
+        "total_students": total_students,
+        "total_quizzes": total_quizzes,
+        "total_materials": total_materials,
+        "avg_score": avg_score,
+        "recent_classes": recent_classes,
+        "recent_quizzes": recent_quizzes,
+        "recent_activity": recent_activity,
     }
-    return render(request, 'teacher/dashboard.html', context)
+    return render(request, "teacher/dashboard.html", context)
 
 
 @login_required
@@ -47,7 +80,8 @@ def teacher_classes(request):
         messages.success(request, f"Class '{title}' created successfully!")
         return redirect('classes')
 
-    classes = Course.objects.filter(teacher=request.user).order_by('-created_at')
+    classes = Course.objects.filter(
+        teacher=request.user).order_by('-created_at')
     return render(request, 'teacher/classes.html', {'classes': classes})
 
 
@@ -56,18 +90,21 @@ def teacher_classes(request):
 def teacher_class_view(request, class_id):
     """Detailed class view with add-student functionality."""
     course = get_object_or_404(Course, id=class_id, teacher=request.user)
-    students = Enrollment.objects.filter(course=course).select_related('student')
+    students = Enrollment.objects.filter(
+        course=course).select_related('student')
     materials = Material.objects.filter(course=course).order_by('-uploaded_at')
 
     # Add students by email (comma-separated)
     if request.method == 'POST':
         emails_raw = request.POST.get('emails')
         if emails_raw:
-            emails = [e.strip().lower() for e in emails_raw.split(',') if e.strip()]
+            emails = [e.strip().lower()
+                      for e in emails_raw.split(',') if e.strip()]
             added, skipped = [], []
 
             for email in emails:
-                student = User.objects.filter(email=email, role='student').first()
+                student = User.objects.filter(
+                    email=email, role='student').first()
                 if not student:
                     skipped.append(email)
                     continue
@@ -80,7 +117,8 @@ def teacher_class_view(request, class_id):
             if added:
                 messages.success(request, f"Enrolled: {', '.join(added)}")
             if skipped:
-                messages.warning(request, f"Skipped (not found or already added): {', '.join(skipped)}")
+                messages.warning(
+                    request, f"Skipped (not found or already added): {', '.join(skipped)}")
             return redirect('class_view', class_id=course.id)
 
     context = {
