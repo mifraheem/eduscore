@@ -31,9 +31,11 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
 
     path('', dashboard, name='student_dashboard'),
-    path('student/classes/', classes, name='classes'),
+    path('student/classes/', classes, name='std_classes'),
     path('student/classes/<int:class_id>/', class_view, name='std_class_view'),
     path('student/take-quiz/', take_quiz, name='std_take_quiz'),
     path('student/quiz-result/', quiz_result, name='std_quiz_result'),
     path('student/profile/', profile, name='student_profile'),
+    path('student/notifications/', notifications, name='std_notifications'),
+    path('student/quizzes/', quizzes, name='std_quizzes'),
 ]

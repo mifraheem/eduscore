@@ -1,0 +1,110 @@
+{% extends "sbase.html" %}
+{% block title %}EduScore | Notifications{% endblock %}
+{% block header_title %}Notifications{% endblock %}
+{% block header_subtitle %}Stay updated with class activities, quiz alerts, and teacher feedback{% endblock %}
+
+{% block content %}
+
+<!-- Top Controls -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+  <h2 class="text-lg font-semibold text-primary">Recent Updates</h2>
+  <div class="flex gap-2">
+    <button class="border px-4 py-2 rounded-xl text-sm hover:bg-gray-50">Mark All as Read</button>
+    <button class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary/90">Clear All</button>
+  </div>
+</div>
+
+<!-- Notifications List -->
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y">
+
+  <!-- Unread Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-primary mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">New Quiz Available: <span class="text-primary">Linear Equations</span></p>
+        <p class="text-xs text-gray-500 mt-1">Your teacher added a new quiz in <strong>Grade 10 – Mathematics</strong>. Deadline: <em>Nov 15, 2025</em>.</p>
+        <p class="text-xs text-gray-400 mt-2">2 hours ago</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">View Quiz</button>
+  </div>
+
+  <!-- Read Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-gray-300 mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">Feedback Received: <span class="text-primary">Algebra Basics</span></p>
+        <p class="text-xs text-gray-500 mt-1">AI grading is complete. You scored <strong>88%</strong>. Check detailed feedback now.</p>
+        <p class="text-xs text-gray-400 mt-2">Yesterday</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">View Feedback</button>
+  </div>
+
+  <!-- Unread Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-primary mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">New Material Uploaded: <span class="text-primary">Geometry – Class Slides</span></p>
+        <p class="text-xs text-gray-500 mt-1">Your teacher added new slides in <strong>Grade 10 – Mathematics</strong>. Review before next quiz.</p>
+        <p class="text-xs text-gray-400 mt-2">3 hours ago</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">Open Material</button>
+  </div>
+
+  <!-- Read Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-gray-300 mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">Class Announcement</p>
+        <p class="text-xs text-gray-500 mt-1">Tomorrow’s session will focus on <strong>Trigonometric Functions</strong>. Be prepared with Chapter 5 notes.</p>
+        <p class="text-xs text-gray-400 mt-2">2 days ago</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">View Class</button>
+  </div>
+
+  <!-- Read Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-gray-300 mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">Result Updated: <span class="text-primary">Physics – Forces Quiz</span></p>
+        <p class="text-xs text-gray-500 mt-1">Your teacher reviewed your answers. Your final score is <strong>91%</strong>.</p>
+        <p class="text-xs text-gray-400 mt-2">3 days ago</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">View Result</button>
+  </div>
+
+  <!-- Unread Notification -->
+  <div class="flex justify-between items-start p-5 hover:bg-gray-50 transition">
+    <div class="flex items-start gap-4">
+      <span class="w-3 h-3 rounded-full bg-primary mt-2"></span>
+      <div>
+        <p class="text-sm text-gray-800 font-medium">Reminder: Upcoming Quiz – <span class="text-primary">Trigonometry Practice</span></p>
+        <p class="text-xs text-gray-500 mt-1">Scheduled for <em>Nov 12, 2025</em>. Don’t forget to review your formulas and notes.</p>
+        <p class="text-xs text-gray-400 mt-2">6 hours ago</p>
+      </div>
+    </div>
+    <button class="text-xs text-primary hover:underline">Set Reminder</button>
+  </div>
+</div>
+
+<!-- Footer Controls -->
+<div class="flex justify-between items-center mt-8 text-sm text-gray-500">
+  <p>Showing <span class="font-medium text-gray-700">1–6</span> of <span class="font-medium text-gray-700">20</span> notifications</p>
+  <div class="flex gap-2">
+    <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">← Prev</button>
+    <button class="px-3 py-1.5 border rounded-lg bg-primary text-white">1</button>
+    <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">2</button>
+    <button class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">Next →</button>
+  </div>
+</div>
+
+{% endblock %}

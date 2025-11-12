@@ -17,3 +17,9 @@ def quiz_result(request):
 
 def profile(request):
     return render(request, 'student/profile.html')
+
+def notifications(request):
+    return render(request, 'student/notifications.html')
+
+def quizzes(request):
+    return render(request, 'student/quizzes.html')

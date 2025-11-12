@@ -57,13 +57,14 @@
       <!-- User Section -->
       <div class="flex items-center gap-5">
         <!-- Notifications -->
-        <button class="relative hover:scale-105 transition-transform">
+        <a href="{% url 'std_notifications' %}" class="relative hover:scale-105 transition-transform">
           <svg class="w-6 h-6 text-gray-600 hover:text-primary transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
           </svg>
           <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full px-[5px] py-[1px]">3</span>
-        </button>
+        </a>
+
 
         <!-- User Dropdown -->
         <div class="relative group">
